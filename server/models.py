@@ -12,5 +12,11 @@ class Newsletter(db.Model, SerializerMixin):
     published_at = db.Column(db.DateTime, server_default=db.func.now())
     edited_at = db.Column(db.DateTime, onupdate=db.func.now())
 
-    def __repr__(self):
-        return f'<Newsletter {self.title}, published at {self.published_at}.>'
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "body": self.body,
+            "published_at": self.published_at.strftime('%Y-%m-%d %H:%M:%S'),
+            "edited_at": self.edited_at.strftime('%Y-%m-%d %H:%M:%S')
+        }
